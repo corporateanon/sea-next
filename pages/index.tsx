@@ -25,8 +25,12 @@ const Home: FC = () => {
             searchQuery: 're',
         },
     });
+    if ((error?.networkError as any)?.statusCode === 401) {
+        return <a href="/api/auth/gh">Log in</a>;
+    }
     return (
         <>
+            {error && JSON.stringify(error)}
             <ul>
                 {data?.search?.edges &&
                     data?.search?.edges.map(({ node }, i) => (
