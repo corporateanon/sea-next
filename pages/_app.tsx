@@ -1,6 +1,7 @@
 import App, { AppContext } from 'next/app';
 import nookies from 'nookies';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import '../styles/globals.css';
 
 function MyApp({ Component, pageProps, ghAccessToken }) {
     const apollo = new ApolloClient({
@@ -21,7 +22,6 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
     const appProps = await App.getInitialProps(appContext);
     const cookies = nookies.get(appContext.ctx);
     const { ghAccessToken } = cookies;
-    console.log({ ghAccessToken });
 
     return { ...appProps, ghAccessToken };
 };

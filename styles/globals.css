@@ -7,8 +7,8 @@ body {
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  color: #cf1fc5;
+  text-decoration: underline;
 }
 
 * {

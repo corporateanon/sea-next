@@ -21,9 +21,7 @@ const endpoint = async (req: NextApiRequest, res: NextApiResponse) => {
     const { access_token: accessToken } = parse(result) as {
         access_token?: string;
     };
-    console.log({ result });
     if (accessToken) {
-        console.log('Authenticated', accessToken);
         nookies.set({ res }, 'ghAccessToken', accessToken, {
             maxAge: 365 * 24 * 60 * 60,
             httpOnly: false,

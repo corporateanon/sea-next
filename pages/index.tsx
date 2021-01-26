@@ -1,46 +1,38 @@
-import { gql, useQuery } from '@apollo/client';
-import { FC } from 'react';
-
-const getRepos = gql`
-    query getRepos($searchQuery: String!) {
-        search(query: $searchQuery, type: REPOSITORY, first: 10) {
-            edges {
-                node {
-                    ... on Repository {
-                        id
-                        name
-                        stargazerCount
-                        forkCount
-                        nameWithOwner
-                    }
-                }
-            }
-        }
-    }
-`;
+import { ChangeEvent, FC, useCallback, useState } from 'react';
+import { Button } from '../components/Button';
+import { LoginButton } from '../components/LoginButton';
+import { LogoutButton } from '../components/LogoutButton';
+import { RepositoriesList } from '../components/RepositoriesList';
+import useDebounce from '../lib/useDebounce';
+import { useReposSearch } from '../lib/useReposSearch';
+import classes from './index.module.scss';
 
 const Home: FC = () => {
-    const { data, loading, error } = useQuery(getRepos, {
-        variables: {
-            searchQuery: 're',
-        },
-    });
-    if ((error?.networkError as any)?.statusCode === 401) {
-        return <a href="/api/auth/gh">Log in</a>;
-    }
+    const [query, setQuery] = useState('react');
+    const debouncedQuery = useDebounce(query, 500);
+    const { error, repositories, shouldLogin, data } = useReposSearch(
+        debouncedQuery
+    );
+    const handleOnChange = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => setQuery(e.target.value),
+        []
+    );
+
     return (
-        <>
+        <div className={classes.container}>
+            <p>{shouldLogin ? <LoginButton /> : <LogoutButton />}</p>
             {error && JSON.stringify(error)}
-            <ul>
-                {data?.search?.edges &&
-                    data?.search?.edges.map(({ node }, i) => (
-                        <li key={i}>
-                            {node.nameWithOwner} 🌟 {node.stargazerCount} 🍴{' '}
-                            {node.forkCount}
-                        </li>
-                    ))}
-            </ul>
-        </>
+            <p>
+                <input
+                    type="search"
+                    name="query"
+                    value={query}
+                    onChange={handleOnChange}
+                    placeholder="Search"
+                />
+            </p>
+            {data && <RepositoriesList items={repositories} />}
+        </div>
     );
 };
 

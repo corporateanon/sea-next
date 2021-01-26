@@ -1,0 +1,16 @@
+.table {
+    border-collapse: collapse;
+
+    td,
+    th {
+        border: 1px solid black;
+        padding: 0.3rem 1rem;
+    }
+
+    th {
+        text-transform: uppercase;
+        font-weight: bolder;
+        color: #222;
+        background-color: #ddd;
+    }
+}
