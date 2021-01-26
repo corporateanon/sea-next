@@ -34,7 +34,11 @@ const Home: FC = () => {
                             placeholder="Search"
                         />
                     </p>
-                    {data && <RepositoriesList items={repositories} />}
+                    {data && (
+                        <div className={classes.horizontalScroller}>
+                            <RepositoriesList items={repositories} />
+                        </div>
+                    )}
                 </>
             )}
         </div>
