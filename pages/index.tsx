@@ -10,7 +10,7 @@ import classes from './index.module.scss';
 const Home: FC = () => {
     const [query, setQuery] = useState('react');
     const debouncedQuery = useDebounce(query, 500);
-    const { error, repositories, shouldLogin, data } = useReposSearch(
+    const { loading, error, repositories, shouldLogin, data } = useReposSearch(
         debouncedQuery
     );
     const handleOnChange = useCallback(
@@ -21,17 +21,22 @@ const Home: FC = () => {
     return (
         <div className={classes.container}>
             <p>{shouldLogin ? <LoginButton /> : <LogoutButton />}</p>
-            {error && JSON.stringify(error)}
-            <p>
-                <input
-                    type="search"
-                    name="query"
-                    value={query}
-                    onChange={handleOnChange}
-                    placeholder="Search"
-                />
-            </p>
-            {data && <RepositoriesList items={repositories} />}
+
+            {!shouldLogin && !loading && (
+                <>
+                    {error && JSON.stringify(error)}
+                    <p>
+                        <input
+                            type="search"
+                            name="query"
+                            value={query}
+                            onChange={handleOnChange}
+                            placeholder="Search"
+                        />
+                    </p>
+                    {data && <RepositoriesList items={repositories} />}
+                </>
+            )}
         </div>
     );
 };
