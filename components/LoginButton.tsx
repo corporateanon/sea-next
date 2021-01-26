@@ -5,5 +5,5 @@ export const LoginButton = () => {
     const redirect = useCallback(() => {
         document.location.href = '/api/auth/gh';
     }, []);
-    return <Button onClick={redirect}>Sign In</Button>;
+    return <Button onClick={redirect}>Sign in with GitHub</Button>;
 };
