@@ -22,7 +22,7 @@ const Home: FC = () => {
         <div className={classes.container}>
             <p>{shouldLogin ? <LoginButton /> : <LogoutButton />}</p>
 
-            {!shouldLogin && !loading && (
+            {!shouldLogin && (
                 <>
                     {error && JSON.stringify(error)}
                     <p>
@@ -34,7 +34,7 @@ const Home: FC = () => {
                             placeholder="Search"
                         />
                     </p>
-                    {data && (
+                    {data && !loading && (
                         <div className={classes.horizontalScroller}>
                             <RepositoriesList items={repositories} />
                         </div>
