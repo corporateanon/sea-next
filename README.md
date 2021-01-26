@@ -1,5 +1,10 @@
 # Demo application
 
+## Live instances:
+
+ 1. Deployed to Vercel: https://sea.typescript.work
+ 2. Deployed to Docker Swarm cloud: https://sea.boto.space
+
 ## Uses:
 
 -   Apollo
