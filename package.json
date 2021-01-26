@@ -7,7 +7,7 @@
         "codegen": "apollo client:codegen --target=typescript",
         "dev": "next dev",
         "docker:build": "docker build . --file Dockerfile --tag seanext",
-        "docker:run": "docker run --rm -it  -p 3000:3000/tcp seanext:latest",
+        "docker:run": "docker run --rm -it --env-file .env.local -p 3000:3000/tcp seanext:latest",
         "start": "next start",
         "test": "jest"
     },
